@@ -2,16 +2,20 @@ import express, { Router } from 'express'
 import {Request, Response} from 'express'
 import Transaction from "../provider/transactions"
 
-const create = async (request: Request, response: Response) => {
+export const create = async (request: Request, response: Response) => {
   const {
     items,
     metadata,
+    isPaid,
+    transactionCode,
   } = request.body
   const Provider = new Transaction()
   try {
     const transaction = await Provider.create({
       items,
       metadata,
+      isPaid,
+      transactionCode,
     })
     return response.status(200).json({transaction})
   } catch(e) {
@@ -33,6 +37,20 @@ const list = async (request: Request, response: Response) => {
   }
 }
 
+const getOrder = async (request: Request, response: Response) => {
+  const {transactionCode} = request.params
+  const Provider = new Transaction()
+  try {
+    const transaction = await Provider.findOrder(transactionCode)
+    return response.status(200).json(transaction)
+  } catch(e) {
+    return response.status(400).json({
+      message: (<Error>e).message
+    })
+  }
+}
+
+
 class Urls {
   private router: Router
   constructor() {
@@ -43,6 +61,10 @@ class Urls {
     this.router.get(
       '/',
       list,
+    )
+    this.router.get(
+      '/:transactionCode',
+      getOrder,
     )
     this.router.post(
       '/',

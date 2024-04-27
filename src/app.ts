@@ -6,6 +6,7 @@ import morgan from 'morgan'
 import UsersRouter from './routers/users'
 import ProductsRouter from './routers/products'
 import TransactionsRouter from './routers/transactions'
+import PublicRouter from './routers/public'
 import fileUpload from "express-fileupload"
 import path from "path"
 import jwt from "./utils/jwt"
@@ -44,6 +45,7 @@ class Main {
 
   private loadRouters() {
     this.app.use('/users', UsersRouter)
+    this.app.use('/public', PublicRouter)
     this.app.use((request: Request, response: Response, next: NextFunction) => {
       const {access_token} = request.headers
       try {

@@ -67,7 +67,7 @@ const update = async (request: Request, response: Response) => {
   return response.status(200).json({msg: 'success'})
 }
 
-const listProduct = async (request: Request, response: Response) => {
+export const listProduct = async (request: Request, response: Response) => {
   const keyword = request.query.keyword
   const Provider = new Product()
   try {

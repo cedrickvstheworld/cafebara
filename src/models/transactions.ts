@@ -18,6 +18,8 @@ const schema = new Schema({
   items,
   metadata,
   total: Number,
+  isPaid: Boolean,
+  transactionCode: String,
 })
 
 export type Transaction = InferSchemaType<typeof schema>
