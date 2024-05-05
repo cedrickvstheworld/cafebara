@@ -1,7 +1,6 @@
 import { hash, test } from "../utils/bcrypt";
 import Model from "../models/users";
 import jwt from "../utils/jwt";
-import { verify } from "crypto";
 
 interface IUserCreate {
   username: string
@@ -52,7 +51,7 @@ export default class {
   public async authorize(accessToken: string) {
     try {
       const r = new jwt().verify(accessToken, `${process.env.JWT_SECRET_KEY_SESSION}`)
-      if (!verify) {
+      if (!r) {
         throw new Error("invalid access token")
       }
       return r

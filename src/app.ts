@@ -19,7 +19,7 @@ class Main {
   constructor() {
     this.app = express()
     this.port = process.env.PORT
-    this.dbUrlString = `mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`
+    this.dbUrlString = `${process.env.DB_URI}`
     this.appConfig()
   }
 
